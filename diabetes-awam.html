@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diabetes Tipe 2 — Panduan untuk Semua Orang</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --bg: #FFF9F0;
+    --card: #FFFFFF;
+    --primary: #E05A2B;
+    --primary-light: #FFF0EA;
+    --teal: #1A9E8F;
+    --teal-light: #E0F7F4;
+    --blue: #2B6CB0;
+    --blue-light: #EBF4FF;
+    --green: #276749;
+    --green-light: #E6F6EE;
+    --yellow: #D97706;
+    --yellow-light: #FFFBEB;
+    --red: #C53030;
+    --red-light: #FFF5F5;
+    --purple: #553C9A;
+    --purple-light: #FAF5FF;
+    --text: #1A202C;
+    --muted: #718096;
+    --border: #E2E8F0;
+    --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    --shadow-lg: 0 12px 48px rgba(0,0,0,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #E05A2B 0%, #C0392B 50%, #8B2FC9 100%);
+    padding: 60px 24px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 100px;
+    padding: 6px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .hero h1 span { color: #FFD93D; }
+  .hero p {
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.9);
+    max-width: 600px;
+    margin: 0 auto 32px;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    position: relative;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .hero-stat {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 16px;
+    padding: 16px 24px;
+    backdrop-filter: blur(10px);
+  }
+  .hero-stat .num {
+    display: block;
+    font-size: 2rem;
+    font-weight: 900;
+    color: #FFD93D;
+    line-height: 1;
+  }
+  .hero-stat .label { font-size: 0.8rem; color: rgba(255,255,255,0.85); font-weight: 600; }
+
+  /* ── NAV PILLS ── */
+  .nav-pills {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,249,240,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--border);
+    padding: 12px 24px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-pills::-webkit-scrollbar { display: none; }
+  .pill {
+    white-space: nowrap;
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: var(--muted);
+  }
+  .pill:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+  .pill.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 60px 0;
+    border-bottom: 2px dashed var(--border);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+  }
+  .section.visible { opacity: 1; transform: none; }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .section-title span { color: var(--primary); }
+  .section-sub {
+    font-family: 'Lora', serif;
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 600px;
+    margin-bottom: 36px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+
+  /* ── ANALOGY BOX ── */
+  .analogy {
+    background: linear-gradient(135deg, #FFF9E6 0%, #FFF0DC 100%);
+    border: 2px solid #F6C343;
+    border-radius: 20px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .analogy::before {
+    content: '💡';
+    position: absolute;
+    right: 20px; top: 20px;
+    font-size: 2.5rem;
+    opacity: 0.3;
+  }
+  .analogy-label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #B45309;
+    margin-bottom: 8px;
+  }
+  .analogy h3 { font-size: 1.2rem; font-weight: 800; color: #78350F; margin-bottom: 10px; }
+  .analogy p { color: #92400E; font-size: 0.95rem; }
+
+  /* ── STORY STEPS ── */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: flex;
+    gap: 20px;
+    position: relative;
+    padding-bottom: 32px;
+  }
+  .step:last-child { padding-bottom: 0; }
+  .step-left { display: flex; flex-direction: column; align-items: center; }
+  .step-num {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; font-weight: 900; color: #fff;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .step-line {
+    width: 3px;
+    flex: 1;
+    background: linear-gradient(to bottom, var(--border), transparent);
+    margin-top: 4px;
+  }
+  .step:last-child .step-line { display: none; }
+  .step-content { padding-top: 8px; flex: 1; }
+  .step-content h4 { font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; }
+  .step-content p { color: var(--muted); font-size: 0.95rem; }
+
+  /* ── METER / VISUAL ── */
+  .meter-wrap { margin: 24px 0; }
+  .meter-label { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; }
+  .meter-bar { height: 20px; border-radius: 100px; background: #E2E8F0; overflow: hidden; position: relative; }
+  .meter-fill {
+    height: 100%;
+    border-radius: 100px;
+    position: relative;
+    transition: width 1s ease;
+    display: flex; align-items: center; justify-content: flex-end; padding-right: 10px;
+  }
+  .meter-fill span { font-size: 0.75rem; font-weight: 800; color: #fff; }
+  .meter-zones {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .zone {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.8rem; font-weight: 700;
+  }
+  .zone-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+  /* ── BIG NUMBER ── */
+  .big-num-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin: 32px 0; }
+  .big-num-card {
+    border-radius: 20px;
+    padding: 24px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .big-num-card .emoji { font-size: 2rem; margin-bottom: 8px; display: block; }
+  .big-num-card .num { font-size: 2.2rem; font-weight: 900; line-height: 1; display: block; margin-bottom: 4px; }
+  .big-num-card .desc { font-size: 0.82rem; font-weight: 700; opacity: 0.8; }
+
+  /* ── PILL TAG ── */
+  .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin: 3px;
+  }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+  .compare-table thead th {
+    font-size: 0.8rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.5px; padding: 12px 16px; color: var(--muted);
+  }
+  .compare-table tbody tr { background: var(--card); }
+  .compare-table tbody td {
+    padding: 14px 16px;
+    font-size: 0.9rem;
+  }
+  .compare-table tbody td:first-child { border-radius: 12px 0 0 12px; font-weight: 700; }
+  .compare-table tbody td:last-child { border-radius: 0 12px 12px 0; }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .checklist li {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--card);
+    border-radius: 14px;
+    padding: 14px 18px;
+    border: 1px solid var(--border);
+    font-size: 0.95rem;
+  }
+  .checklist li .icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight {
+    border-radius: 20px;
+    padding: 28px 32px;
+    position: relative;
+    overflow: hidden;
+    margin: 28px 0;
+  }
+  .highlight h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 8px; }
+  .highlight p { font-size: 0.95rem; opacity: 0.9; }
+
+  /* ── QUOTE ── */
+  .quote-box {
+    background: linear-gradient(135deg, var(--teal) 0%, #0D7A6E 100%);
+    border-radius: 24px;
+    padding: 36px;
+    text-align: center;
+    color: #fff;
+    margin: 40px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .quote-box::before {
+    content: '"';
+    position: absolute;
+    top: -20px; left: 20px;
+    font-size: 12rem;
+    font-family: 'Lora', serif;
+    opacity: 0.1;
+    color: #fff;
+    line-height: 1;
+  }
+  .quote-box p {
+    font-family: 'Lora', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    line-height: 1.6;
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .quote-box cite { font-size: 0.85rem; opacity: 0.7; font-weight: 700; }
+
+  /* ── FOOD GRID ── */
+  .food-item {
+    border-radius: 16px;
+    padding: 16px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+  .food-item .food-emoji { font-size: 2rem; display: block; margin-bottom: 6px; }
+
+  /* ── ACCORDION ── */
+  .accordion { display: flex; flex-direction: column; gap: 8px; }
+  .acc-item {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .acc-item.open { border-color: var(--primary); }
+  .acc-header {
+    padding: 18px 22px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1rem;
+    user-select: none;
+    transition: background 0.2s;
+  }
+  .acc-header:hover { background: var(--primary-light); }
+  .acc-item.open .acc-header { background: var(--primary-light); color: var(--primary); }
+  .acc-arrow { transition: transform 0.3s; font-size: 0.8rem; }
+  .acc-item.open .acc-arrow { transform: rotate(180deg); }
+  .acc-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .acc-inner {
+    padding: 0 22px 20px;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+  .acc-inner strong { color: var(--text); }
+
+  /* ── PROGRESS VISUAL ── */
+  .journey {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .journey-step {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 20px 16px;
+    text-align: center;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .journey-step:hover { border-color: var(--primary); transform: translateY(-4px); }
+  .journey-step .j-icon { font-size: 2.2rem; display: block; margin-bottom: 10px; }
+  .journey-step .j-title { font-weight: 800; font-size: 0.9rem; margin-bottom: 4px; }
+  .journey-step .j-time { font-size: 0.75rem; color: var(--muted); font-weight: 600; }
+  .journey-step .j-badge {
+    position: absolute; top: -8px; right: -8px;
+    background: var(--primary); color: #fff;
+    border-radius: 100px;
+    font-size: 0.65rem; font-weight: 800;
+    padding: 3px 8px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #1A202C;
+    color: #A0AEC0;
+    padding: 40px 24px;
+    text-align: center;
+    font-size: 0.85rem;
+  }
+  footer strong { color: #fff; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+  @keyframes slideIn { from{opacity:0;transform:translateX(-20px)} to{opacity:1;transform:translateX(0)} }
+  @keyframes countUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+  .pulse { animation: pulse 2s infinite; }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:600px) {
+    .hero-stats { gap: 12px; }
+    .hero-stat { padding: 12px 16px; }
+    .step { gap: 14px; }
+    .quote-box p { font-size: 1.05rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="hero-badge">📖 Panduan untuk Semua Orang</div>
+  <h1>Memahami <span>Diabetes Tipe 2</span><br>dengan Mudah</h1>
+  <p>Penjelasan sederhana, jelas, dan tanpa istilah rumit — untuk Anda dan keluarga</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="num">19,5 Jt</span>
+      <span class="label">Penderita di Indonesia</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">74%</span>
+      <span class="label">Tidak Terdiagnosis</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">46%</span>
+      <span class="label">Bisa Remisi dengan Gaya Hidup</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ NAV ══════════ -->
+<nav class="nav-pills">
+  <a href="#apa" class="pill active">🔍 Apa itu?</a>
+  <a href="#tanda" class="pill">⚠️ Tanda-tanda</a>
+  <a href="#gula" class="pill">📊 Gula Darah</a>
+  <a href="#makan" class="pill">🍽️ Makanan</a>
+  <a href="#gerak" class="pill">🏃 Olahraga</a>
+  <a href="#obat" class="pill">💊 Obat-obatan</a>
+  <a href="#jiwa" class="pill">🧠 Pikiran</a>
+  <a href="#remisi" class="pill">🌟 Sembuh?</a>
+</nav>
+
+<!-- ══════════ SECTION 1: APA ITU ══════════ -->
+<section class="section" id="apa">
+  <div class="container">
+    <div class="section-label">🔍 Bagian 1</div>
+    <h2 class="section-title">Apa itu <span>Diabetes Tipe 2</span>?</h2>
+    <p class="section-sub">Bayangkan ini seperti kunci dan pintu yang rusak di dalam tubuh Anda...</p>
+
+    <div class="analogy">
+      <div class="analogy-label">💡 Analogi Sederhana</div>
+      <h3>Diabetes = Kunci Rusak & Pintu Macet</h3>
+      <p>
+        Bayangkan gula darah adalah <strong>bahan bakar mobil</strong>. Insulin adalah <strong>kunci</strong> yang membuka tangki agar bahan bakar bisa masuk ke mesin. Pada Diabetes Tipe 2, kuncinya masih ada — tapi pintunya macet (tidak mau dibuka). Akibatnya, bahan bakar menumpuk di jalanan (darah), tapi mesin (otot & organ) tetap kelaparan.
+      </p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num" style="background:#E05A2B">1</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <h4>🍚 Anda makan nasi atau roti</h4>
+          <p>Makanan berubah menjadi gula (glukosa) dan masuk ke aliran darah. Kadar gula darah naik.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num" style="background:#D97706">2</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <h4>🔑 Pankreas mengeluarkan insulin</h4>
+          <p>Insulin bertugas "membuka pintu" sel otot dan hati agar gula bisa masuk dan dipakai sebagai energi.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num" style="background:#C53030">3</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <h4>🚪 Pada DM Tipe 2 — Pintunya Macet!</h4>
+          <p>Sel-sel tidak mau membuka meski sudah ada insulin. Kondisi ini disebut <strong>"resistensi insulin"</strong>. Gula menumpuk di darah dan tidak bisa dipakai sebagai energi.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num" style="background:#553C9A">4</div>
+        </div>
+        <div class="step-content">
+          <h4>😫 Pankreas kelelahan</h4>
+          <p>Pankreas terus kerja keras menghasilkan lebih banyak insulin, tapi akhirnya kelelahan. Produksi insulin pun menurun. Gula darah makin tidak terkendali.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight" style="background: linear-gradient(135deg, #EBF4FF, #C3DAFE); border: 2px solid #4299E1; margin-top: 32px;">
+      <h3>🆚 Beda DM Tipe 1 vs Tipe 2</h3>
+      <p><strong>Tipe 1:</strong> Pankreas TIDAK bisa buat insulin sama sekali (biasanya sejak kecil, faktor imun). <strong>Tipe 2:</strong> Pankreas BISA buat insulin, tapi sel-sel tubuh tidak mau merespons (biasanya dewasa, faktor gaya hidup). Yang dibahas di sini adalah <strong>Tipe 2</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SECTION 2: TANDA-TANDA ══════════ -->
+<section class="section" id="tanda">
+  <div class="container">
+    <div class="section-label">⚠️ Bagian 2</div>
+    <h2 class="section-title">Kenali <span>Tanda-tandanya</span></h2>
+    <p class="section-sub">74% orang tidak tahu mereka punya diabetes. Jangan sampai Anda termasuk.</p>
+
+    <div class="grid-2">
+      <div class="card" style="border-left: 4px solid #E05A2B;">
+        <div style="font-size:2rem;margin-bottom:12px;">🚨</div>
+        <h3 style="font-weight:800;margin-bottom:16px;color:#C53030;">Gejala yang Sering Muncul</h3>
+        <ul class="checklist" style="gap:8px;">
+          <li style="padding:10px 14px;font-size:0.88rem;"><span class="icon">💧</span> Sering buang air kecil, termasuk malam hari</li>
+          <li style="padding:10px 14px;font-size:0.88rem;"><span class="icon">🥤</span> Terus-terusan haus dan mulut kering</li>
+          <li style="padding:10px 14px;font-size:0.88rem;"><span class="icon">😴</span> Mudah lelah meski sudah cukup tidur</li>
+          <li style="padding:10px 14px;font-size:0.88rem;"><span class="icon">🔭</span> Penglihatan kabur atau berubah-ubah</li>
+          <li style="padding:10px 14px;font-size:0.88rem;"><span class="icon">🦠</span> Luka yang sembuhnya lama</li>
+          <li style="padding:10px 14px;font-size:0.88rem;"><span class="icon">⚡</span> Kesemutan atau mati rasa di tangan/kaki</li>
+          <li style="padding:10px 14px;font-size:0.88rem;"><span class="icon">⚖️</span> Berat badan turun tanpa sebab jelas</li>
+        </ul>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="card" style="border-left: 4px solid #D97706;">
+          <div style="font-size:1.5rem;margin-bottom:8px;">⚠️</div>
+          <h4 style="font-weight:800;margin-bottom:8px;color:#92400E;">Bahaya "Diam-diam"</h4>
+          <p style="font-size:0.9rem;color:var(--muted);">Diabetes bisa hadir TANPA gejala apapun selama bertahun-tahun. Sering disebut "silent disease". Itulah mengapa cek gula darah rutin sangat penting.</p>
+        </div>
+        <div class="card" style="border-left: 4px solid #276749; background: var(--green-light);">
+          <div style="font-size:1.5rem;margin-bottom:8px;">✅</div>
+          <h4 style="font-weight:800;margin-bottom:8px;color:var(--green);">Siapa yang Wajib Cek?</h4>
+          <p style="font-size:0.9rem;color:#276749;">Usia ≥45 tahun &bull; Ada keluarga dengan diabetes &bull; Kelebihan berat badan &bull; Kurang gerak &bull; Pernah diabetes saat hamil — <strong>Cek minimal 1x/tahun!</strong></p>
+        </div>
+        <div class="analogy" style="margin:0;">
+          <div class="analogy-label">💡 Mudah Diingat</div>
+          <h3 style="font-size:1rem;">Aturan 3 Banyak + 1 Kurang</h3>
+          <p style="font-size:0.9rem;"><strong>Banyak:</strong> Minum 💧 Makan 🍽️ Kencing 🚿 &mdash; <strong>Kurang:</strong> Tenaga 😴</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SECTION 3: GULA DARAH ══════════ -->
+<section class="section" id="gula">
+  <div class="container">
+    <div class="section-label">📊 Bagian 3</div>
+    <h2 class="section-title">Memahami <span>Angka Gula Darah</span></h2>
+    <p class="section-sub">Angka-angka ini adalah "laporan cuaca" kesehatan gula darah Anda. Yuk belajar baca!</p>
+
+    <div class="grid-2" style="margin-bottom:28px;">
+      <div class="card">
+        <h4 style="font-weight:800;margin-bottom:4px;">🌅 Gula Darah Puasa</h4>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;">Diukur setelah tidak makan minimal 8 jam</p>
+        <div class="meter-wrap">
+          <div class="meter-label"><span>Normal</span><span>Prediabetes</span><span>Diabetes</span></div>
+          <div style="display:flex;height:24px;border-radius:100px;overflow:hidden;">
+            <div style="width:40%;background:linear-gradient(90deg,#48BB78,#68D391);display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:0.7rem;font-weight:800;color:#fff;">&lt;100</span>
+            </div>
+            <div style="width:25%;background:linear-gradient(90deg,#F6AD55,#ECC94B);display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:0.7rem;font-weight:800;color:#fff;">100-125</span>
+            </div>
+            <div style="width:35%;background:linear-gradient(90deg,#FC8181,#E53E3E);display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:0.7rem;font-weight:800;color:#fff;">≥126</span>
+            </div>
+          </div>
+          <p style="font-size:0.78rem;color:var(--muted);margin-top:6px;">Satuan: mg/dL</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4 style="font-weight:800;margin-bottom:4px;">🩸 HbA1c — "Nilai Rapor"</h4>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;">Rata-rata gula darah selama 3 bulan terakhir</p>
+        <div class="meter-wrap">
+          <div class="meter-label"><span>Normal</span><span>Prediabetes</span><span>Diabetes</span></div>
+          <div style="display:flex;height:24px;border-radius:100px;overflow:hidden;">
+            <div style="width:35%;background:linear-gradient(90deg,#48BB78,#68D391);display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:0.7rem;font-weight:800;color:#fff;">&lt;5,7%</span>
+            </div>
+            <div style="width:22%;background:linear-gradient(90deg,#F6AD55,#ECC94B);display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:0.7rem;font-weight:800;color:#fff;">5,7-6,4</span>
+            </div>
+            <div style="width:43%;background:linear-gradient(90deg,#FC8181,#E53E3E);display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:0.7rem;font-weight:800;color:#fff;">≥6,5%</span>
+            </div>
+          </div>
+          <p style="font-size:0.78rem;color:var(--muted);margin-top:6px;">Target penderita diabetes: &lt;7% (sesuai anjuran dokter)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="analogy">
+      <div class="analogy-label">💡 Analogi HbA1c</div>
+      <h3>HbA1c = Rapor Sekolah untuk Gula Darah</h3>
+      <p>Kalau cek gula darah harian seperti melihat <strong>cuaca hari ini</strong> (bisa berubah tiap jam), maka HbA1c seperti <strong>nilai rapor semester</strong> — menggambarkan kondisi Anda selama 3 bulan. Tidak bisa "belajar dadakan" sehari sebelumnya! 😄</p>
+    </div>
+
+    <div class="big-num-grid">
+      <div class="big-num-card" style="background:linear-gradient(135deg,#C6F6D5,#9AE6B4);">
+        <span class="emoji">✅</span>
+        <span class="num" style="color:#276749;">&lt;7%</span>
+        <span class="desc" style="color:#276749;">Target HbA1c<br>yang baik</span>
+      </div>
+      <div class="big-num-card" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A);">
+        <span class="emoji">⚠️</span>
+        <span class="num" style="color:#92400E;">7–8%</span>
+        <span class="desc" style="color:#92400E;">Perlu<br>perhatian</span>
+      </div>
+      <div class="big-num-card" style="background:linear-gradient(135deg,#FED7D7,#FC8181);">
+        <span class="emoji">🚨</span>
+        <span class="num" style="color:#C53030;">&gt;9%</span>
+        <span class="desc" style="color:#C53030;">Risiko<br>komplikasi tinggi</span>
+      </div>
+      <div class="big-num-card" style="background:linear-gradient(135deg,#E9D8FD,#B794F4);">
+        <span class="emoji">🌟</span>
+        <span class="num" style="color:#553C9A;">&lt;6,5%</span>
+        <span class="desc" style="color:#553C9A;">Definisi<br>REMISI!</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SECTION 4: MAKANAN ══════════ -->
+<section class="section" id="makan">
+  <div class="container">
+    <div class="section-label">🍽️ Bagian 4</div>
+    <h2 class="section-title">Panduan <span>Makan Cerdas</span></h2>
+    <p class="section-sub">Tidak ada makanan yang 100% terlarang — yang penting adalah porsi, pilihan, dan cara memakannya.</p>
+
+    <div class="analogy">
+      <div class="analogy-label">💡 Konsep Penting: Indeks Glikemik (IG)</div>
+      <h3>IG = Seberapa cepat makanan menaikkan gula darah</h3>
+      <p>Bayangkan IG seperti <strong>kecepatan eskalator</strong>. Makanan IG tinggi = eskalator super cepat (gula darah langsung melonjak). Makanan IG rendah = eskalator lambat (gula naik perlahan dan stabil). Pilih eskalator lambat! 🏃‍♂️➡️🚶‍♂️</p>
+    </div>
+
+    <h3 style="font-weight:800;margin-bottom:16px;">🍱 Metode Piring Sehat</h3>
+    <div class="card" style="margin-bottom:28px;overflow:hidden;">
+      <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;">
+        <div style="position:relative;width:180px;height:180px;flex-shrink:0;margin:0 auto;">
+          <svg viewBox="0 0 180 180" style="width:100%;height:100%;">
+            <circle cx="90" cy="90" r="85" fill="#f5f5f5" stroke="#ddd" stroke-width="2"/>
+            <!-- Sayuran 50% -->
+            <path d="M90,90 L90,5 A85,85 0 0,1 175,90 Z" fill="#48BB78" opacity="0.85"/>
+            <path d="M90,90 L175,90 A85,85 0 0,1 90,175 Z" fill="#68D391" opacity="0.7"/>
+            <!-- Protein 25% -->
+            <path d="M90,90 L90,175 A85,85 0 0,1 5,90 Z" fill="#4299E1" opacity="0.8"/>
+            <!-- Karbo 25% -->
+            <path d="M90,90 L5,90 A85,85 0 0,1 90,5 Z" fill="#F6AD55" opacity="0.85"/>
+            <circle cx="90" cy="90" r="25" fill="white"/>
+            <text x="90" y="95" text-anchor="middle" font-size="18" font-weight="bold">🍽️</text>
+          </svg>
+        </div>
+        <div style="flex:1;min-width:200px;">
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:#F0FFF4;">
+              <div style="width:16px;height:16px;border-radius:4px;background:#48BB78;flex-shrink:0;"></div>
+              <div><strong style="color:#276749;">½ Piring — Sayuran</strong><br><span style="font-size:0.83rem;color:var(--muted);">Bayam, kangkung, brokoli, wortel, labu siam</span></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:#EBF8FF;">
+              <div style="width:16px;height:16px;border-radius:4px;background:#4299E1;flex-shrink:0;"></div>
+              <div><strong style="color:#2B6CB0;">¼ Piring — Protein</strong><br><span style="font-size:0.83rem;color:var(--muted);">Ikan, telur, tahu, tempe, ayam tanpa kulit</span></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:#FFFAF0;">
+              <div style="width:16px;height:16px;border-radius:4px;background:#F6AD55;flex-shrink:0;"></div>
+              <div><strong style="color:#92400E;">¼ Piring — Karbohidrat Kompleks</strong><br><span style="font-size:0.83rem;color:var(--muted);">Nasi merah, ubi, singkong rebus, jagung</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <h3 style="font-weight:800;margin-bottom:14px;color:#276749;">✅ Pilihan Baik untuk Diabetes</h3>
+        <div class="grid-3" style="gap:10px;">
+          <div class="food-item" style="background:#F0FFF4;border:2px solid #9AE6B4;">
+            <span class="food-emoji">🥦</span> Sayuran hijau
+          </div>
+          <div class="food-item" style="background:#F0FFF4;border:2px solid #9AE6B4;">
+            <span class="food-emoji">🐟</span> Ikan kembung
+          </div>
+          <div class="food-item" style="background:#F0FFF4;border:2px solid #9AE6B4;">
+            <span class="food-emoji">🥚</span> Telur
+          </div>
+          <div class="food-item" style="background:#F0FFF4;border:2px solid #9AE6B4;">
+            <span class="food-emoji">🌾</span> Nasi merah
+          </div>
+          <div class="food-item" style="background:#F0FFF4;border:2px solid #9AE6B4;">
+            <span class="food-emoji">🫘</span> Tempe/Tahu
+          </div>
+          <div class="food-item" style="background:#F0FFF4;border:2px solid #9AE6B4;">
+            <span class="food-emoji">🥑</span> Alpukat
+          </div>
+          <div class="food-item" style="background:#F0FFF4;border:2px solid #9AE6B4;">
+            <span class="food-emoji">🍎</span> Apel/Pir
+          </div>
+          <div class="food-item" style="background:#F0FFF4;border:2px solid #9AE6B4;">
+            <span class="food-emoji">🥜</span> Kacang-kacangan
+          </div>
+          <div class="food-item" style="background:#F0FFF4;border:2px solid #9AE6B4;">
+            <span class="food-emoji">🫚</span> VCO / Zaitun
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-weight:800;margin-bottom:14px;color:#C53030;">⚠️ Batasi Atau Hindari</h3>
+        <div class="grid-3" style="gap:10px;">
+          <div class="food-item" style="background:#FFF5F5;border:2px solid #FC8181;">
+            <span class="food-emoji">🍚</span> Nasi putih banyak
+          </div>
+          <div class="food-item" style="background:#FFF5F5;border:2px solid #FC8181;">
+            <span class="food-emoji">🧃</span> Minuman manis
+          </div>
+          <div class="food-item" style="background:#FFF5F5;border:2px solid #FC8181;">
+            <span class="food-emoji">🍩</span> Kue manis
+          </div>
+          <div class="food-item" style="background:#FFF5F5;border:2px solid #FC8181;">
+            <span class="food-emoji">🍟</span> Gorengan
+          </div>
+          <div class="food-item" style="background:#FFF5F5;border:2px solid #FC8181;">
+            <span class="food-emoji">🍜</span> Mi instan
+          </div>
+          <div class="food-item" style="background:#FFF5F5;border:2px solid #FC8181;">
+            <span class="food-emoji">🥤</span> Soft drink
+          </div>
+          <div class="food-item" style="background:#FFF5F5;border:2px solid #FC8181;">
+            <span class="food-emoji">🍞</span> Roti putih
+          </div>
+          <div class="food-item" style="background:#FFF5F5;border:2px solid #FC8181;">
+            <span class="food-emoji">🍦</span> Es krim
+          </div>
+          <div class="food-item" style="background:#FFF5F5;border:2px solid #FC8181;">
+            <span class="food-emoji">🍺</span> Alkohol
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight" style="background: linear-gradient(135deg,#EBF4FF,#C3DAFE);border:2px solid #4299E1;margin-top:28px;">
+      <h3>💡 Tips Cerdas untuk Nasi</h3>
+      <p>Nasi adalah makanan pokok kita. Kuncinya bukan berhenti makan nasi, tapi <strong>cara memasak dan memakannya</strong>: ① Ganti nasi putih → nasi merah ② Dinginkan nasi setelah dimasak (meningkatkan <em>resistant starch</em>) ③ Kurangi porsi 50% dan perbanyak sayuran ④ Makan sayuran dan protein dulu, baru nasi terakhir</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SECTION 5: OLAHRAGA ══════════ -->
+<section class="section" id="gerak">
+  <div class="container">
+    <div class="section-label">🏃 Bagian 5</div>
+    <h2 class="section-title">Gerak = <span>Obat Gratis</span> Terbaik</h2>
+    <p class="section-sub">Olahraga bekerja seperti "insulin alami" — menurunkan gula darah tanpa obat!</p>
+
+    <div class="analogy">
+      <div class="analogy-label">💡 Mengapa olahraga menurunkan gula darah?</div>
+      <h3>Otot = Penyedot Gula Terbesar di Tubuh</h3>
+      <p>Saat otot bergerak, mereka <strong>menyerap gula langsung dari darah</strong> tanpa perlu insulin! Bayangkan otot Anda seperti <strong>spons raksasa</strong> — semakin dipakai, semakin banyak gula yang terserap. Inilah mengapa berjalan kaki 30 menit setelah makan bisa menurunkan gula darah secara dramatis.</p>
+    </div>
+
+    <div class="grid-3" style="margin-bottom:28px;">
+      <div class="card" style="border-top:4px solid #48BB78;text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:10px;">🚶</div>
+        <h4 style="font-weight:800;margin-bottom:6px;">Aerobik</h4>
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:12px;">Jalan, sepeda, renang</p>
+        <span class="tag" style="background:#C6F6D5;color:#276749;">150 menit/minggu</span>
+        <p style="font-size:0.82rem;margin-top:10px;color:var(--muted);">= 30 menit/hari, 5 hari seminggu</p>
+      </div>
+      <div class="card" style="border-top:4px solid #4299E1;text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:10px;">💪</div>
+        <h4 style="font-weight:800;margin-bottom:6px;">Latihan Kekuatan</h4>
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:12px;">Squat, push-up, angkat beban</p>
+        <span class="tag" style="background:#BEE3F8;color:#2B6CB0;">2-3x per minggu</span>
+        <p style="font-size:0.82rem;margin-top:10px;color:var(--muted);">Membangun otot = lebih banyak "spons gula"</p>
+      </div>
+      <div class="card" style="border-top:4px solid #F6AD55;text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:10px;">🧘</div>
+        <h4 style="font-weight:800;margin-bottom:6px;">Kurangi Duduk</h4>
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:12px;">Berdiri, jalan singkat</p>
+        <span class="tag" style="background:#FEFCBF;color:#92400E;">Setiap 30 menit</span>
+        <p style="font-size:0.82rem;margin-top:10px;color:var(--muted);">Duduk lama = gula darah naik perlahan</p>
+      </div>
+    </div>
+
+    <div class="card" style="background:linear-gradient(135deg,#276749,#1A9E8F);color:#fff;">
+      <h3 style="color:#fff;font-weight:800;margin-bottom:14px;">🎯 Mulai dari Mana? Rencana 4 Minggu</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;">
+        <div style="background:rgba(255,255,255,0.15);border-radius:14px;padding:14px;">
+          <strong style="font-size:0.9rem;">Minggu 1-2</strong>
+          <p style="font-size:0.82rem;margin-top:6px;opacity:0.9;">Jalan kaki 10-15 menit setiap hari. Jangan lebih dulu!</p>
+        </div>
+        <div style="background:rgba(255,255,255,0.15);border-radius:14px;padding:14px;">
+          <strong style="font-size:0.9rem;">Minggu 3-4</strong>
+          <p style="font-size:0.82rem;margin-top:6px;opacity:0.9;">Tingkatkan jadi 20-25 menit. Tambah 5 menit setiap minggu.</p>
+        </div>
+        <div style="background:rgba(255,255,255,0.15);border-radius:14px;padding:14px;">
+          <strong style="font-size:0.9rem;">Bulan 2</strong>
+          <p style="font-size:0.82rem;margin-top:6px;opacity:0.9;">Capai 30 menit/hari. Coba tambahkan squat 10 kali/hari.</p>
+        </div>
+        <div style="background:rgba(255,255,255,0.15);border-radius:14px;padding:14px;">
+          <strong style="font-size:0.9rem;">Bulan 3+</strong>
+          <p style="font-size:0.82rem;margin-top:6px;opacity:0.9;">Rutinkan 150 menit/minggu + latihan kekuatan 2x.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SECTION 6: OBAT ══════════ -->
+<section class="section" id="obat">
+  <div class="container">
+    <div class="section-label">💊 Bagian 6</div>
+    <h2 class="section-title">Mengenal <span>Obat-Obatan</span> Diabetes</h2>
+    <p class="section-sub">Obat bukan musuh — tapi juga bukan satu-satunya solusi. Pahami cara kerjanya.</p>
+
+    <div class="accordion">
+      <div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <span>💊 Metformin — Si Obat Pertama</span>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="acc-body">
+          <div class="acc-inner">
+            <p><strong>Cara kerja sederhana:</strong> Membantu hati untuk tidak mengeluarkan terlalu banyak gula ke darah, terutama saat puasa/tidur malam.</p>
+            <p style="margin-top:10px;"><strong>Analogi:</strong> Seperti memberi tahu pabrik gula (hati) untuk tidak produksi berlebihan saat sedang tidak dibutuhkan.</p>
+            <p style="margin-top:10px;"><strong>Yang perlu diketahui:</strong> Obat pertama yang biasanya diresepkan. Sudah terbukti aman selama 60+ tahun. Efek samping paling umum: mual atau diare (biasanya hilang setelah beberapa minggu). Diminum bersama makan.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <span>💉 Suntik Insulin — Bukan Hukuman</span>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="acc-body">
+          <div class="acc-inner">
+            <p><strong>Cara kerja:</strong> Menggantikan atau menambah insulin yang tidak cukup diproduksi pankreas. Insulin bukan obat oral karena dicerna oleh asam lambung, jadi harus disuntik.</p>
+            <p style="margin-top:10px;"><strong>Analogi:</strong> Seperti mengisi ulang "kunci" yang sudah berkurang, agar pintu sel bisa dibuka kembali.</p>
+            <p style="margin-top:10px;"><strong>Yang perlu diketahui:</strong> Jarum insulin sangat kecil dan tipis — kebanyakan pasien bilang tidak terasa sakit. Bukan tanda "parah" — kadang justru pilihan terbaik untuk kontrol cepat. Harus didinginkan di kulkas.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <span>🌟 Obat Generasi Baru (GLP-1 & SGLT-2)</span>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="acc-body">
+          <div class="acc-inner">
+            <p><strong>GLP-1 (contoh: Ozempic/Semaglutide):</strong> Meniru hormon alami usus yang "memberi tahu" pankreas untuk kerja lebih keras saat makan, sekaligus membuat kenyang lebih lama. Bonus: membantu turunkan berat badan secara signifikan!</p>
+            <p style="margin-top:10px;"><strong>SGLT-2 (contoh: Jardiance/Forxiga):</strong> Membuat ginjal "membuang" kelebihan gula melalui urin. Seperti membuka "saluran pembuangan gula" ekstra di ginjal. Juga terbukti melindungi jantung dan ginjal.</p>
+            <p style="margin-top:10px;"><strong>Yang perlu diketahui:</strong> Kelas obat ini relatif baru tapi bukti ilmiahnya sangat kuat. Diskusikan dengan dokter apakah cocok untuk Anda.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <span>⚠️ Kapan Harus ke Dokter SEGERA?</span>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="acc-body">
+          <div class="acc-inner">
+            <p><strong>🚨 Tanda Hipoglikemia (gula darah TERLALU RENDAH — &lt;70 mg/dL):</strong></p>
+            <p>Gemetar, keringat dingin, jantung berdebar, pusing, lemas mendadak, bingung. <strong>Tindakan darurat:</strong> Minum 4-6 sendok makan gula pasir / segelas jus buah / 3-4 permen.</p>
+            <p style="margin-top:10px;"><strong>🚨 Tanda Hiperglikemia Parah (gula SANGAT TINGGI &gt;300):</strong></p>
+            <p>Napas berbau buah, mual-muntah hebat, nyeri perut, sangat lemas. Ini darurat medis — segera ke IGD!</p>
+            <p style="margin-top:10px;"><strong>🚫 Jangan pernah</strong> kurangi atau hentikan obat sendiri tanpa konsultasi dokter.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SECTION 7: PIKIRAN ══════════ -->
+<section class="section" id="jiwa">
+  <div class="container">
+    <div class="section-label">🧠 Bagian 7</div>
+    <h2 class="section-title">Kesehatan <span>Pikiran & Emosi</span></h2>
+    <p class="section-sub">Stres dan emosi negatif secara harfiah menaikkan gula darah. Ini bukan lebay — ini sains.</p>
+
+    <div class="analogy">
+      <div class="analogy-label">💡 Mengapa Stres Menaikkan Gula Darah?</div>
+      <h3>Stres = Tubuh Menyiapkan "Mode Darurat"</h3>
+      <p>Saat stres, tubuh mengeluarkan hormon kortisol yang memerintahkan hati untuk <strong>memompa gula ekstra ke darah</strong> — seolah-olah Anda sedang lari dari harimau dan butuh energi darurat. Masalahnya, Anda tidak benar-benar lari — gula itu menumpuk begitu saja. Stres kronis = gula darah kronis tinggi.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card" style="border-top:4px solid #553C9A;">
+        <h4 style="font-weight:800;margin-bottom:12px;">😟 Distres Diabetes</h4>
+        <p style="font-size:0.9rem;color:var(--muted);margin-bottom:14px;">Perasaan <em>capek, frustrasi, atau putus asa</em> akibat beban mengelola diabetes setiap hari. Sangat umum, tapi jarang dibicarakan.</p>
+        <ul class="checklist" style="gap:6px;">
+          <li style="padding:8px 12px;font-size:0.85rem;"><span class="icon">😔</span> "Saya bosan harus selalu menjaga makan"</li>
+          <li style="padding:8px 12px;font-size:0.85rem;"><span class="icon">😰</span> "Takut makan ini, takut makan itu"</li>
+          <li style="padding:8px 12px;font-size:0.85rem;"><span class="icon">😤</span> "Sudah usaha keras, tapi angkanya tetap buruk"</li>
+        </ul>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="card" style="border-left:4px solid var(--teal);">
+          <h4 style="font-weight:800;margin-bottom:8px;color:var(--teal);">🧘 Mindfulness 10 Menit/Hari</h4>
+          <p style="font-size:0.9rem;color:var(--muted);">Duduk tenang, tutup mata, fokus pada napas. Saat pikiran mengembara, kembalikan pelan-pelan. Lakukan 10 menit setiap pagi. Terbukti menurunkan kortisol dan HbA1c.</p>
+        </div>
+        <div class="card" style="border-left:4px solid #553C9A;">
+          <h4 style="font-weight:800;margin-bottom:8px;color:#553C9A;">🤝 Kekuatan Cerita</h4>
+          <p style="font-size:0.9rem;color:var(--muted);">Bergabung dengan komunitas sesama penderita diabetes. Berbagi cerita, tips, dan semangat. Penelitian membuktikan dukungan sosial yang kuat secara nyata menurunkan HbA1c.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-box">
+      <p>"Penderita diabetes dengan dukungan sosial yang kuat memiliki kontrol gula darah yang jauh lebih baik. Anda tidak harus melewati perjalanan ini sendirian."</p>
+      <cite>— Berdasarkan penelitian psikologi diabetes internasional</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SECTION 8: REMISI ══════════ -->
+<section class="section" id="remisi">
+  <div class="container">
+    <div class="section-label">🌟 Bagian 8</div>
+    <h2 class="section-title">Bisakah Diabetes <span>Sembuh</span>?</h2>
+    <p class="section-sub">Jawabannya: <strong>Ya, ada yang namanya REMISI</strong> — dan ini nyata, terukur, dan dapat dicapai!</p>
+
+    <div class="highlight" style="background:linear-gradient(135deg,#FEFCBF,#FEF3C7);border:3px solid #F6C343;margin-bottom:32px;">
+      <h3 style="color:#92400E;">💡 Apa itu REMISI Diabetes?</h3>
+      <p style="color:#78350F;">Remisi = gula darah kembali ke angka NORMAL <strong>tanpa obat apapun</strong>, dan bertahan minimal 3 bulan. Bukan hanya "terkontrol dengan obat" — tapi benar-benar normal tanpa bantuan obat!</p>
+    </div>
+
+    <div class="journey">
+      <div class="journey-step">
+        <div class="j-badge">Mulai</div>
+        <span class="j-icon">🎯</span>
+        <div class="j-title">Komitmen</div>
+        <div class="j-time">Hari 1</div>
+      </div>
+      <div class="journey-step">
+        <span class="j-icon">🥗</span>
+        <div class="j-title">Ubah Pola Makan</div>
+        <div class="j-time">Minggu 1-4</div>
+      </div>
+      <div class="journey-step">
+        <span class="j-icon">🏃</span>
+        <div class="j-title">Rutin Olahraga</div>
+        <div class="j-time">Minggu 2-8</div>
+      </div>
+      <div class="journey-step">
+        <span class="j-icon">⚖️</span>
+        <div class="j-title">Turun 5-10kg</div>
+        <div class="j-time">Bulan 2-3</div>
+      </div>
+      <div class="journey-step">
+        <span class="j-icon">📉</span>
+        <div class="j-title">HbA1c Turun</div>
+        <div class="j-time">Bulan 3-6</div>
+      </div>
+      <div class="journey-step">
+        <div class="j-badge" style="background:var(--teal);">🌟</div>
+        <span class="j-icon">🎉</span>
+        <div class="j-title">REMISI!</div>
+        <div class="j-time">Bulan 6-12</div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:28px;">
+      <div class="card" style="background:linear-gradient(135deg,#C6F6D5,#9AE6B4);border:none;">
+        <h4 style="font-weight:900;font-size:1.3rem;color:#276749;margin-bottom:12px;">📊 Bukti Nyata: Studi DiRECT</h4>
+        <p style="font-size:0.95rem;color:#276749;margin-bottom:14px;">Penelitian di Inggris (2018) dengan 298 penderita DM Tipe 2:</p>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="background:rgba(255,255,255,0.5);border-radius:10px;padding:10px 14px;font-size:0.9rem;color:#276749;font-weight:700;">✅ 46% mencapai REMISI dalam 1 tahun</div>
+          <div style="background:rgba(255,255,255,0.5);border-radius:10px;padding:10px 14px;font-size:0.9rem;color:#276749;font-weight:700;">✅ 86% yang turun 15kg+ berhasil remisi</div>
+          <div style="background:rgba(255,255,255,0.5);border-radius:10px;padding:10px 14px;font-size:0.9rem;color:#276749;font-weight:700;">✅ Tanpa obat, tanpa operasi</div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="card" style="border-left:4px solid #E05A2B;">
+          <h4 style="font-weight:800;margin-bottom:8px;color:#C53030;">⏰ Semakin Cepat, Semakin Baik</h4>
+          <p style="font-size:0.88rem;color:var(--muted);">Penderita yang baru terdiagnosis (&lt;6 tahun) memiliki peluang remisi jauh lebih tinggi karena sel pankreas masih bisa pulih. Jangan tunda!</p>
+        </div>
+        <div class="analogy" style="margin:0;">
+          <div class="analogy-label">💡 Ingat!</div>
+          <h3 style="font-size:1rem;">Remisi ≠ Sembuh Total</h3>
+          <p style="font-size:0.88rem;">Remisi berarti diabetes <em>tertidur</em>, bukan hilang selamanya. Kalau kembali ke gaya hidup lama, diabetes bisa kembali aktif. Kunci: pertahankan perubahan seumur hidup.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ RINGKASAN AKHIR ══════════ -->
+<section class="section" style="border:none;" id="ringkasan">
+  <div class="container">
+    <div class="section-label">📋 Ringkasan</div>
+    <h2 class="section-title">5 Hal yang Harus Anda <span>Lakukan Sekarang</span></h2>
+    <p class="section-sub">Mulai dari yang paling kecil. Satu langkah hari ini lebih baik dari rencana sempurna yang tidak pernah dimulai.</p>
+
+    <ul class="checklist">
+      <li>
+        <span class="icon">🏥</span>
+        <div><strong>Periksakan HbA1c Anda Sekarang</strong> — kalau belum pernah, segera ke dokter atau laboratorium. Ini adalah langkah pertama yang paling penting. Anda tidak bisa memperbaiki apa yang tidak Anda ukur.</div>
+      </li>
+      <li>
+        <span class="icon">🚰</span>
+        <div><strong>Ganti Semua Minuman Manis dengan Air Putih</strong> — mulai besok pagi. Satu perubahan ini saja sudah berdampak besar. Teh manis, es sirop, soft drink — ganti dengan air putih atau teh tanpa gula.</div>
+      </li>
+      <li>
+        <span class="icon">🚶</span>
+        <div><strong>Jalan Kaki 15 Menit Setelah Makan Terbesar Anda</strong> — tidak perlu pakaian olahraga, tidak perlu ke gym. Cukup jalan santai di sekitar rumah 15 menit setelah makan siang atau malam.</div>
+      </li>
+      <li>
+        <span class="icon">🌙</span>
+        <div><strong>Tidur Cukup 7-8 Jam Setiap Malam</strong> — jadikan ini prioritas, bukan kemewahan. Kurang tidur meningkatkan gula darah sama efektifnya dengan makan makanan manis.</div>
+      </li>
+      <li>
+        <span class="icon">👥</span>
+        <div><strong>Ceritakan pada Satu Orang Terdekat</strong> — minta dukungan mereka. Perjalanan ini jauh lebih mudah dengan teman. Minta anggota keluarga untuk memasak lebih sehat bersama Anda.</div>
+      </li>
+    </ul>
+
+    <div class="quote-box" style="margin-top:40px;">
+      <p>"Tubuh Anda memiliki kekuatan luar biasa untuk memulihkan diri. Yang dibutuhkan hanyalah konsistensi kecil setiap hari, bukan perubahan besar yang dramatis."</p>
+      <cite>— Panduan Mastering Diabetes Type 2</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <strong>Mastering Diabetes Type 2</strong> — Panduan untuk Semua Orang<br>
+  <span style="margin-top:8px;display:block;opacity:0.7;">⚠️ Informasi ini bersifat edukatif. Selalu konsultasikan keputusan pengobatan dengan dokter Anda.</span>
+</footer>
+
+<script>
+  // Accordion
+  function toggleAcc(btn) {
+    const item = btn.parentElement;
+    const body = item.querySelector('.acc-body');
+    const inner = item.querySelector('.acc-inner');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.acc-item').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.acc-body').style.maxHeight = '0';
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      body.style.maxHeight = inner.offsetHeight + 40 + 'px';
+    }
+  }
+
+  // Intersection observer for animations
+  const sections = document.querySelectorAll('.section');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08 });
+  sections.forEach(s => observer.observe(s));
+
+  // Nav pill highlight
+  const pills = document.querySelectorAll('.pill');
+  const sectionEls = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sectionEls.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 200) current = s.id;
+    });
+    pills.forEach(p => {
+      p.classList.toggle('active', p.getAttribute('href') === '#' + current);
+    });
+  });
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
